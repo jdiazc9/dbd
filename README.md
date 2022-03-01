@@ -5,9 +5,9 @@
 
 **dbd_corr_vs_params.py** - Main simulation script. Runs 100 sets of simulations randomizing model parameters each time, and outputs 3 files:
 
-*dbd_corr_vs_params.txt - Contains information on each set of model parameters used and the diversity slope observed in each case.
-*dbd_rpos.txt - Contains the number of non-focal families and focal species in each of the communities for a specific simulation where a positive diversity slope was observed.
-*dbd_neg.txt - Contains the number of non-focal families and focal species in each of the communities for a specific simulation where a negative diversity slope was observed.
+* dbd_corr_vs_params.txt - Contains information on each set of model parameters used and the diversity slope observed in each case.
+* dbd_rpos.txt - Contains the number of non-focal families and focal species in each of the communities for a specific simulation where a positive diversity slope was observed.
+* dbd_neg.txt - Contains the number of non-focal families and focal species in each of the communities for a specific simulation where a negative diversity slope was observed.
 
 **dbd_corr_vs_params.R** - Loads the files above and generates the corresponding plots.
 
