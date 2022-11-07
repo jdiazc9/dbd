@@ -196,10 +196,10 @@ n_species <- lapply(0:99,
                     })
 n_species <- unlist(n_species)
 
-if (F) { # uncomment this to check that the observed DBD slopes in the simulations are larger than the slope we would expect just from random species sampling
+if (T) { # uncomment this to check that the observed DBD slopes in the simulations are larger than the slope we would expect just from random species sampling
   
   # we now *randomly* assemble 10000 communities of specified richness (matching the richness observed in the simulations)
-  inoc <- read.csv('./data/inoc.csv')
+  inoc <- read.csv('../data/inoc.csv')
   
   makeRandomCommunity <- function(target_richness) {
     
@@ -232,9 +232,44 @@ if (F) { # uncomment this to check that the observed DBD slopes in the simulatio
   # get null expectation for dbd slope
   slope_null <- lm(data = null_dbd, formula = n_focalSpecies ~ n_nonFocalFamilies)$coefficients[2]
   
+  # get distribution of slopes under null model
+  null_slopes <- sapply(1:100,
+                        FUN = function(i) {
+                          null_i <- null_dbd[sample(1:nrow(null_dbd), 100), ]
+                          slope_i <- lm(null_i, formula = n_focalSpecies ~ n_nonFocalFamilies)$coefficients[2]
+                          return(slope_i)
+                        })
+  
   ggplot(null_dbd, aes(x = n_nonFocalFamilies, y = n_focalSpecies)) +
     geom_point(alpha = 0.25) +
-    geom_smooth(method = 'lm')
+    geom_smooth(method = 'lm',
+                formula = y~x)
+  
+  plot_this <- rbind(data.frame(group = 'null',
+                                slope = as.numeric(null_slopes)),
+                     data.frame(group = 'simul',
+                                slope = dbd_corr$slope[dbd_corr$time == 'T20']))
+  
+  ggplot(plot_this, aes(x = group, y = slope)) +
+    geom_boxplot(fill = NA,
+                 width = 0.5,
+                 outlier.shape = NA) +
+    geom_jitter(width = 0.15) +
+    scale_y_continuous(name = 'DBD slope') +
+    theme_bw() +
+    theme(aspect.ratio = 1.6,
+          panel.grid = element_blank(),
+          axis.title.x = element_blank(),
+          axis.text.x = element_text(angle = 45,
+                                     hjust = 1),
+          axis.title = element_text(size = 18),
+          axis.text = element_text(size = 16))
+  
+  ggsave('../plots/simul_vs_null_slopes.pdf',
+         width = 150,
+         height = 150,
+         units = 'mm',
+         dpi = 600)
 
 }
 
