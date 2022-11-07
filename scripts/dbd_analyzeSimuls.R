@@ -1,5 +1,3 @@
-rm(list = ls())
-
 library(ggplot2)
 
 files <- list.files('../simul_runs', full.names = T)
