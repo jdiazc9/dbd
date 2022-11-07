@@ -1,6 +1,8 @@
 # Code for simulations &amp; analysis in 'Diversity begets diversity under microbial niche construction'
 [https://doi.org/10.1101/2022.02.13.480281](https://doi.org/10.1101/2022.02.13.480281)
 
+Directories and files description:
+
 **./community-simulator** - This directory contains the source files for the community simulator package updated with the functionalities described [here](https://doi.org/10.1073/pnas.2111261119).
 
 **./data** - This directory contains the experimental data.
